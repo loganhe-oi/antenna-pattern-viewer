@@ -1,0 +1,114 @@
+.pattern-view-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.view-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.tab-btn {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  padding: 5px 14px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.abs-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.abs-toggle input {
+  accent-color: var(--accent);
+}
+
+.pattern-view {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  min-height: 450px;
+  flex-shrink: 0;
+}
+
+.view-hidden {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -1;
+  /* Keep dimensions so Plotly can still render for toImage */
+  width: calc(100% - 300px);
+  height: 450px;
+}
+
+.pattern-view-rect {
+  flex-direction: column;
+}
+
+.pattern-view-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+}
+
+.empty-state h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.empty-state p {
+  font-size: 13px;
+  margin: 0;
+}
+
+.pattern-view-3d {
+  width: 100%;
+  min-height: 550px;
+  padding: 16px;
+}
+
+@media (max-width: 900px) {
+  .pattern-view {
+    flex-direction: column;
+  }
+}

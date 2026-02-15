@@ -1,0 +1,12 @@
+{
+  "name": "Antenna Pattern Viewer",
+  "short_name": "Pattern Viewer",
+  "description": "Visualize and compare antenna radiation patterns. Designed by ORAN Infra Inc.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121218",
+  "theme_color": "#121218",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

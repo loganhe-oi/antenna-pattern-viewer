@@ -1,0 +1,82 @@
+.comparison-table-wrapper {
+  padding: 0 16px 16px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-family: var(--font-sans);
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 6px 12px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.comparison-table thead th {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  position: sticky;
+  top: 0;
+  background: var(--bg-primary);
+  z-index: 2;
+}
+
+.comparison-table th:first-child,
+.comparison-table td:first-child {
+  position: sticky;
+  left: 0;
+  background: var(--bg-primary);
+  z-index: 1;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Corner cell needs highest z-index */
+.comparison-table thead th:first-child {
+  z-index: 3;
+}
+
+.comparison-table td {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-primary);
+}
+
+.comparison-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cell-best {
+  color: #0a7d2e !important;
+  background: rgba(10, 125, 46, 0.08) !important;
+}
+
+.cell-worst {
+  color: #cc2936 !important;
+  background: rgba(204, 41, 54, 0.06) !important;
+}
+
+.antenna-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.antenna-header .color-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
