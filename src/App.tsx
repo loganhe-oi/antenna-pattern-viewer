@@ -21,6 +21,7 @@ import FileDropZone from './components/FileDropZone';
 import FilterBar, { type FilterState, createEmptyFilter, applyFilter } from './components/FilterBar';
 import FileList from './components/FileList';
 import MetadataPanel from './components/MetadataPanel';
+import CoveragePanel from './components/CoveragePanel';
 import AdjustmentPanel from './components/AdjustmentPanel';
 import PatternView from './components/PatternView';
 import type { PatternViewHandle } from './components/PatternView';
@@ -35,17 +36,17 @@ export default function App() {
   const patternViewRef = useRef<PatternViewHandle>(null);
   const [showInterpolation, setShowInterpolation] = useState(false);
 
-  // Auto-load test file on startup
-  useEffect(() => {
-    if (loaded.current) return;
-    loaded.current = true;
-    fetch('/test-atoll.txt')
-      .then(r => r.text())
-      .then(content => {
-        addParsedFiles(content, 'test-atoll.txt');
-      })
-      .catch(err => console.warn('Could not load test file:', err));
-  }, []);
+  // Auto-load test file on startup (disabled)
+  // useEffect(() => {
+  //   if (loaded.current) return;
+  //   loaded.current = true;
+  //   fetch('/test-atoll.txt')
+  //     .then(r => r.text())
+  //     .then(content => {
+  //       addParsedFiles(content, 'test-atoll.txt');
+  //     })
+  //     .catch(err => console.warn('Could not load test file:', err));
+  // }, []);
 
   function addParsedFiles(content: string, fileName: string) {
     const result = parseMsiFile(content, fileName, store.nextColor);
@@ -196,6 +197,7 @@ export default function App() {
             }}
           />
           <MetadataPanel file={selectedFile} />
+          <CoveragePanel file={selectedFile} />
         </aside>
         <main className="main-content">
           <PatternView ref={patternViewRef} files={visibleFiles} selectedFile={selectedFile} />
