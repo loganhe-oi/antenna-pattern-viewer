@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useAntennaStore } from './hooks/useAntennaStore';
 import { useAdjustedFiles } from './hooks/useAdjustedFiles';
 import { parseMsiFile } from './lib/msiParser';
@@ -31,22 +31,9 @@ import './App.css';
 
 export default function App() {
   const store = useAntennaStore();
-  const loaded = useRef(false);
   const [filter, setFilter] = useState<FilterState>(createEmptyFilter);
   const patternViewRef = useRef<PatternViewHandle>(null);
   const [showInterpolation, setShowInterpolation] = useState(false);
-
-  // Auto-load test file on startup (disabled)
-  // useEffect(() => {
-  //   if (loaded.current) return;
-  //   loaded.current = true;
-  //   fetch('/test-atoll.txt')
-  //     .then(r => r.text())
-  //     .then(content => {
-  //       addParsedFiles(content, 'test-atoll.txt');
-  //     })
-  //     .catch(err => console.warn('Could not load test file:', err));
-  // }, []);
 
   function addParsedFiles(content: string, fileName: string) {
     const result = parseMsiFile(content, fileName, store.nextColor);
