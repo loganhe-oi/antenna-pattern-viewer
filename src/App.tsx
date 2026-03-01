@@ -22,6 +22,8 @@ import FilterBar, { type FilterState, createEmptyFilter, applyFilter } from './c
 import FileList from './components/FileList';
 import MetadataPanel from './components/MetadataPanel';
 import CoveragePanel from './components/CoveragePanel';
+import { type CoverageParams, DEFAULT_COVERAGE_PARAMS } from './types/coverage';
+import { useCoverageResults } from './hooks/useCoverageResults';
 import AdjustmentPanel from './components/AdjustmentPanel';
 import PatternView from './components/PatternView';
 import type { PatternViewHandle } from './components/PatternView';
@@ -34,6 +36,7 @@ export default function App() {
   const [filter, setFilter] = useState<FilterState>(createEmptyFilter);
   const patternViewRef = useRef<PatternViewHandle>(null);
   const [showInterpolation, setShowInterpolation] = useState(false);
+  const [coverageParams, setCoverageParams] = useState<CoverageParams>(DEFAULT_COVERAGE_PARAMS);
 
   function addParsedFiles(content: string, fileName: string) {
     const result = parseMsiFile(content, fileName, store.nextColor);
@@ -138,6 +141,7 @@ export default function App() {
 
   // Find selected file from adjusted list for panels
   const selectedFile = adjustedFiltered.find(f => f.id === store.state.selectedFileId) ?? null;
+  const coverageResults = useCoverageResults(selectedFile, coverageParams);
 
   return (
     <div className="app">
@@ -184,10 +188,10 @@ export default function App() {
             }}
           />
           <MetadataPanel file={selectedFile} />
-          <CoveragePanel file={selectedFile} />
+          <CoveragePanel file={selectedFile} params={coverageParams} onParamsChange={setCoverageParams} results={coverageResults} />
         </aside>
         <main className="main-content">
-          <PatternView ref={patternViewRef} files={visibleFiles} selectedFile={selectedFile} />
+          <PatternView ref={patternViewRef} files={visibleFiles} selectedFile={selectedFile} coverageResults={coverageResults} coverageParams={coverageParams} />
           {visibleFiles.length > 1 && (
             <ComparisonTable files={visibleFiles} comparisonData={comparisonData} />
           )}

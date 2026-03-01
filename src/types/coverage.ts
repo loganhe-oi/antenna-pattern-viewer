@@ -35,6 +35,14 @@ export interface CostHataResult {
   validationMessage?: string;
 }
 
+export const DEFAULT_COVERAGE_PARAMS: CoverageParams = {
+  antennaHeight: 30,
+  txPower: 43,
+  environmentType: 'urban',
+  receiveThreshold: -100,
+  mobileHeight: 1.5,
+};
+
 export interface CoverageAreaResult {
   innerRadius: number;          // km
   outerRadius: number;          // km

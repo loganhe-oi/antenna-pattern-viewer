@@ -1,5 +1,7 @@
 import { forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import type { MsiFile } from '../types/msi';
+import type { CoverageParams } from '../types/coverage';
+import type { CoverageResults } from '../hooks/useCoverageResults';
 import { analyzeSidelobes, type SidelobeResult } from '../lib/sidelobeAnalysis';
 import { computeEnvelope } from '../lib/envelope';
 import PolarPlot from './PolarPlot';
@@ -8,12 +10,15 @@ import RectangularPlot from './RectangularPlot';
 import type { RectangularPlotHandle } from './RectangularPlot';
 import ThreeDPlot from './ThreeDPlot';
 import type { ThreeDPlotHandle } from './ThreeDPlot';
+import CoverageSimulation from './CoverageSimulation';
 import SidelobePanel from './SidelobePanel';
 import './PatternView.css';
 
 interface PatternViewProps {
   files: MsiFile[];
   selectedFile?: MsiFile | null;
+  coverageResults?: CoverageResults | null;
+  coverageParams?: CoverageParams;
 }
 
 export interface PatternViewHandle {
@@ -27,8 +32,8 @@ export interface PatternViewHandle {
 }
 
 const PatternView = forwardRef<PatternViewHandle, PatternViewProps>(
-  function PatternView({ files, selectedFile }, ref) {
-    const [viewMode, setViewMode] = useState<'polar' | 'rectangular' | '3d'>('polar');
+  function PatternView({ files, selectedFile, coverageResults, coverageParams }, ref) {
+    const [viewMode, setViewMode] = useState<'polar' | 'rectangular' | '3d' | 'simulation'>('polar');
     const [absoluteMode, setAbsoluteMode] = useState(false);
     const [showSidelobes, setShowSidelobes] = useState(false);
     const [showEnvelope, setShowEnvelope] = useState(false);
@@ -136,6 +141,12 @@ const PatternView = forwardRef<PatternViewHandle, PatternViewProps>(
           >
             3D
           </button>
+          <button
+            className={viewMode === 'simulation' ? 'tab-btn active' : 'tab-btn'}
+            onClick={() => setViewMode('simulation')}
+          >
+            Coverage Simulation
+          </button>
           {viewMode === 'rectangular' && (
             <label className="abs-toggle">
               <input
@@ -186,6 +197,22 @@ const PatternView = forwardRef<PatternViewHandle, PatternViewProps>(
         {viewMode === '3d' && (
           <div className="pattern-view pattern-view-3d">
             <ThreeDPlot ref={threeDRef} files={files} envelopeFile={envelopeFile} />
+          </div>
+        )}
+
+        {/* Coverage simulation view */}
+        {viewMode === 'simulation' && (
+          <div className="pattern-view pattern-view-3d">
+            {coverageResults && coverageParams ? (
+              <CoverageSimulation coverageResults={coverageResults} params={coverageParams} />
+            ) : (
+              <div className="pattern-view-empty">
+                <div className="empty-state">
+                  <h2>No Coverage Data</h2>
+                  <p>Select a file and configure coverage parameters in the sidebar panel.</p>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -1,26 +1,15 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import type { MsiFile } from '../types/msi';
 import type { CoverageParams, EnvironmentType } from '../types/coverage';
-import { computeBeamwidths } from '../lib/beamwidth';
-import {
-  computeBeamProjection,
-  computeFsplRange,
-  computeCostHata,
-  computeCoverageArea,
-} from '../lib/coverageModels';
+import type { CoverageResults } from '../hooks/useCoverageResults';
 import './CoveragePanel.css';
 
 interface CoveragePanelProps {
   file: MsiFile | null;
+  params: CoverageParams;
+  onParamsChange: (params: CoverageParams) => void;
+  results: CoverageResults | null;
 }
-
-const DEFAULT_PARAMS: CoverageParams = {
-  antennaHeight: 30,
-  txPower: 43,
-  environmentType: 'urban',
-  receiveThreshold: -100,
-  mobileHeight: 1.5,
-};
 
 function fmt(n: number | null | undefined, decimals = 1, suffix = ''): string {
   if (n == null || !isFinite(n)) return '--';
@@ -44,49 +33,13 @@ const Chevron = () => (
   </svg>
 );
 
-export default function CoveragePanel({ file }: CoveragePanelProps) {
-  const [params, setParams] = useState<CoverageParams>(DEFAULT_PARAMS);
+export default function CoveragePanel({ file, params, onParamsChange, results }: CoveragePanelProps) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
     beam: true,
     fspl: false,
     hata: false,
     area: false,
   });
-
-  const results = useMemo(() => {
-    if (!file) return null;
-
-    const freq = parseFloat(file.metadata.frequency) || 0;
-    const gain = parseFloat(file.metadata.gain) || 0;
-
-    // Beamwidths: prefer metadata, fallback to computed
-    const metaVBW = parseFloat(file.metadata.vWidth);
-    const metaHBW = parseFloat(file.metadata.hWidth);
-    const computed = computeBeamwidths(file.vertical);
-    const computedH = computeBeamwidths(file.horizontal);
-    const vBW = (metaVBW > 0 ? metaVBW : computed.bw3dB) || 0;
-    const hBW = (metaHBW > 0 ? metaHBW : computedH.bw3dB) || 0;
-
-    // Total downtilt = metadata tilt + mechanical adjustment
-    const baseTilt = parseFloat(file.metadata.tilt) || 0;
-    const mechTilt = file.adjustments?.mechanicalDowntilt ?? 0;
-    const totalDowntilt = baseTilt + mechTilt;
-
-    const beam = computeBeamProjection(params.antennaHeight, totalDowntilt, vBW, hBW);
-
-    const fspl = freq > 0
-      ? computeFsplRange(freq, params.txPower, gain, params.receiveThreshold)
-      : null;
-
-    const hata = freq > 0
-      ? computeCostHata(freq, params.antennaHeight, params.mobileHeight, params.txPower, gain, params.receiveThreshold, params.environmentType)
-      : null;
-
-    const propMaxRange = hata?.maxRange ?? fspl?.maxRange ?? null;
-    const area = computeCoverageArea(beam, propMaxRange, hBW);
-
-    return { beam, fspl, hata, area, freq, gain, vBW, hBW, totalDowntilt };
-  }, [file, params]);
 
   function toggleSection(key: string) {
     setExpanded(prev => ({ ...prev, [key]: !prev[key] }));
@@ -95,7 +48,7 @@ export default function CoveragePanel({ file }: CoveragePanelProps) {
   function updateNum(key: keyof CoverageParams, raw: string) {
     const num = parseFloat(raw);
     if (!isNaN(num)) {
-      setParams(prev => ({ ...prev, [key]: num }));
+      onParamsChange({ ...params, [key]: num });
     }
   }
 
@@ -139,7 +92,7 @@ export default function CoveragePanel({ file }: CoveragePanelProps) {
           <select
             className="coverage-select"
             value={params.environmentType}
-            onChange={e => setParams(prev => ({ ...prev, environmentType: e.target.value as EnvironmentType }))}
+            onChange={e => onParamsChange({ ...params, environmentType: e.target.value as EnvironmentType })}
           >
             <option value="urban">Urban</option>
             <option value="suburban">Suburban</option>
