@@ -1,8 +1,9 @@
-const CACHE_NAME = 'pattern-viewer-v1';
+const CACHE_NAME = 'pattern-viewer-v2';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(['/']))
+    // pre-cache the app shell at the worker's own scope (works at the domain root and under a sub-path)
+    caches.open(CACHE_NAME).then((cache) => cache.addAll([self.registration.scope]))
   );
   self.skipWaiting();
 });
@@ -17,6 +18,7 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
   event.respondWith(
     fetch(event.request)
       .then((response) => {
