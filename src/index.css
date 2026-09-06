@@ -1,17 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --bg-primary: #121218;
-  --bg-surface: #1a1a24;
-  --bg-surface-hover: #252530;
-  --text-primary: #e0e0e8;
-  --text-secondary: #9a9ab0;
-  --text-muted: #6a6a80;
-  --accent: #3399ee;
-  --border: rgba(255, 255, 255, 0.1);
-  --shadow-glow: 0 0 20px rgba(51, 153, 238, 0.2);
+  /* Theme tokens mirror index.css on oraninfra.com */
+  --bg-primary: #0a0a0f;
+  --bg-surface: rgba(18, 18, 26, 0.4);
+  --bg-surface-hover: rgba(26, 26, 37, 0.6);
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0a8;
+  --text-muted: #7c7c8a;
+  --accent: #00d4ff;
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow-glow: 0 0 20px rgba(0, 212, 255, 0.15);
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
   --radius: 8px;
   --radius-lg: 12px;
 }
@@ -24,7 +25,7 @@
 
 body {
   margin: 0;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   background: var(--bg-primary);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -52,4 +53,128 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.25);
+}
+
+/* Universe background — same layers as oraninfra.com */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    /* Bright stars */
+    radial-gradient(2px 2px at 10% 15%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 82% 72%, rgba(180,200,255,0.8), transparent),
+    radial-gradient(2px 2px at 30% 25%, rgba(255,220,180,0.8), transparent),
+    radial-gradient(2px 2px at 65% 10%, rgba(255,255,255,0.85), transparent),
+    radial-gradient(2px 2px at 92% 48%, rgba(200,220,255,0.8), transparent),
+    /* Medium stars */
+    radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 85% 40%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 50% 50%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 78% 12%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 18% 88%, rgba(255,240,200,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 55% 38%, rgba(200,220,255,0.6), transparent),
+    /* Small stars */
+    radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 55% 20%, rgba(200,220,255,0.5), transparent),
+    radial-gradient(1px 1px at 70% 55%, rgba(255,255,255,0.45), transparent),
+    radial-gradient(1px 1px at 15% 80%, rgba(200,200,255,0.5), transparent),
+    radial-gradient(1px 1px at 90% 85%, rgba(255,255,255,0.45), transparent),
+    radial-gradient(1px 1px at 33% 90%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 5% 50%, rgba(200,220,255,0.4), transparent),
+    radial-gradient(1px 1px at 60% 5%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 95% 65%, rgba(200,200,255,0.45), transparent),
+    radial-gradient(1px 1px at 45% 30%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1px 1px at 20% 60%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 3% 8%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1px 1px at 17% 45%, rgba(255,200,150,0.35), transparent),
+    radial-gradient(1px 1px at 63% 82%, rgba(200,200,255,0.35), transparent),
+    radial-gradient(1px 1px at 88% 30%, rgba(255,255,200,0.35), transparent),
+    radial-gradient(1px 1px at 42% 12%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 72% 73%, rgba(255,255,255,0.3), transparent),
+    /* Faint dust */
+    radial-gradient(0.8px 0.8px at 8% 42%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(0.8px 0.8px at 37% 58%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(0.8px 0.8px at 52% 93%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(0.8px 0.8px at 76% 27%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(0.8px 0.8px at 97% 15%, rgba(255,255,255,0.2), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    /* === GALAXY — upper right === */
+    /* Bright galactic core */
+    radial-gradient(ellipse 80px 80px at 78% 25%, rgba(255, 240, 200, 0.25), transparent),
+    /* Core warm glow */
+    radial-gradient(ellipse 180px 150px at 78% 25%, rgba(255, 200, 120, 0.15), transparent),
+    /* Core outer glow */
+    radial-gradient(ellipse 300px 250px at 78% 25%, rgba(200, 160, 100, 0.1), transparent),
+    /* Spiral arm 1 — elongated */
+    radial-gradient(ellipse 600px 60px at 78% 25%, rgba(150, 130, 220, 0.12), transparent),
+    /* Spiral arm 2 — perpendicular */
+    radial-gradient(ellipse 60px 500px at 78% 25%, rgba(120, 150, 240, 0.1), transparent),
+    /* Spiral arm extensions */
+    radial-gradient(ellipse 400px 40px at 65% 20%, rgba(100, 120, 200, 0.08), transparent),
+    radial-gradient(ellipse 40px 350px at 83% 35%, rgba(130, 100, 180, 0.07), transparent),
+    /* Galaxy halo */
+    radial-gradient(ellipse 700px 500px at 78% 25%, rgba(60, 40, 120, 0.1), transparent),
+    /* Dust lane across core */
+    radial-gradient(ellipse 400px 30px at 76% 26%, rgba(5, 2, 15, 0.2), transparent),
+
+    /* === NEBULA 1 — lower left, pink/magenta emission nebula === */
+    /* Nebula bright core */
+    radial-gradient(ellipse 200px 180px at 18% 75%, rgba(200, 50, 120, 0.2), transparent),
+    /* Nebula mid glow */
+    radial-gradient(ellipse 350px 300px at 18% 75%, rgba(180, 40, 100, 0.12), transparent),
+    /* Nebula outer shell — pink */
+    radial-gradient(ellipse 500px 420px at 20% 72%, rgba(150, 30, 80, 0.08), transparent),
+    /* Nebula wisp — hot blue region */
+    radial-gradient(ellipse 150px 100px at 12% 70%, rgba(60, 120, 255, 0.12), transparent),
+    /* Nebula wisp — warm edge */
+    radial-gradient(ellipse 120px 180px at 25% 80%, rgba(220, 80, 140, 0.1), transparent),
+    /* Internal bright knot */
+    radial-gradient(ellipse 60px 50px at 16% 73%, rgba(255, 150, 200, 0.15), transparent),
+
+    /* === NEBULA 2 — center-right, blue reflection nebula === */
+    /* Core glow */
+    radial-gradient(ellipse 180px 160px at 65% 60%, rgba(40, 80, 200, 0.15), transparent),
+    /* Mid region */
+    radial-gradient(ellipse 320px 280px at 65% 60%, rgba(30, 60, 160, 0.1), transparent),
+    /* Outer extent */
+    radial-gradient(ellipse 480px 400px at 63% 58%, rgba(20, 40, 120, 0.07), transparent),
+    /* Purple tint edge */
+    radial-gradient(ellipse 200px 150px at 70% 55%, rgba(100, 50, 180, 0.1), transparent),
+    /* Bright embedded star */
+    radial-gradient(3px 3px at 65% 60%, rgba(200, 220, 255, 0.6), transparent),
+    radial-gradient(ellipse 30px 30px at 65% 60%, rgba(150, 180, 255, 0.2), transparent),
+
+    /* === Small distant nebula — upper left === */
+    radial-gradient(ellipse 120px 90px at 8% 20%, rgba(80, 40, 120, 0.1), transparent),
+    radial-gradient(ellipse 60px 50px at 10% 18%, rgba(140, 60, 160, 0.08), transparent),
+
+    /* === Milky Way band — faint diagonal wash === */
+    radial-gradient(ellipse 150% 8% at 50% 45%, rgba(60, 50, 100, 0.08), transparent),
+    radial-gradient(ellipse 120% 5% at 45% 48%, rgba(40, 35, 80, 0.06), transparent),
+
+    /* === Deep space ambient wash === */
+    radial-gradient(ellipse 100% 100% at 50% 50%, rgba(6, 4, 18, 0.4), transparent);
+  pointer-events: none;
+  z-index: -1;
+  transform: rotate(-12deg) scale(1.4);
+}
+
+#root {
+  position: relative;
+  z-index: 0;
 }

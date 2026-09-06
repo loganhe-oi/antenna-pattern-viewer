@@ -175,7 +175,7 @@ const PolarPlot = forwardRef<PolarPlotHandle, PolarPlotProps>(
         font: { color: '#e0e0e8', size: 13, family: 'Inter, sans-serif' },
       },
       polar: {
-        bgcolor: 'rgba(26, 26, 36, 0.4)',
+        bgcolor: 'rgba(18, 18, 26, 0.5)',
         radialaxis: {
           visible: true,
           range: [0, 40],
@@ -204,7 +204,7 @@ const PolarPlot = forwardRef<PolarPlotHandle, PolarPlotProps>(
       showlegend: files.length > 1 || !!envelopeFile,
       legend: {
         font: { color: '#9a9ab0', size: 9 },
-        bgcolor: 'rgba(26, 26, 36, 0.9)',
+        bgcolor: 'rgba(18, 18, 26, 0.9)',
         bordercolor: 'rgba(255, 255, 255, 0.1)',
         borderwidth: 1,
         x: 0,

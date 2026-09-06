@@ -109,7 +109,7 @@
 .chip.active.chip-pol {
   background: rgba(51, 153, 238, 0.15);
   border-color: rgba(51, 153, 238, 0.4);
-  color: #3399ee;
+  color: #00d4ff;
 }
 
 .chip.active.chip-tilt {
